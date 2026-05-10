@@ -1,1 +1,115 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECAMTİERLİST | Rankings</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+        body { background-color: #0c0c0c; color: #e2e8f0; font-family: 'Inter', sans-serif; }
+        .nav-link { color: #94a3b8; transition: 0.2s; }
+        .nav-link:hover { color: #fff; }
+        .active-tab { background: #1e1e1e; border-radius: 8px; color: #fff !important; }
+        .category-btn { background: #161616; border: 1px solid #262626; color: #737373; transition: 0.3s; }
+        .category-btn:hover { border-color: #fbbf24; color: #fff; }
+        .category-active { background: #fbbf24; color: #000 !important; font-weight: bold; }
+        .player-row { background: linear-gradient(90deg, #161616 0%, #1a1a1a 100%); border: 1px solid #262626; }
+        .player-row-top { border: 1px solid #b45309; background: linear-gradient(90deg, #451a03 0%, #1a1a1a 100%); }
+        .tier-icon { width: 32px; height: 32px; border-radius: 50%; display: flex; items-center justify-center; font-size: 10px; font-weight: 900; border: 2px solid rgba(255,255,255,0.1); }
+    </style>
+</head>
+<body class="p-4 md:p-8">
 
+    <nav class="max-w-7xl mx-auto flex items-center justify-between mb-12">
+        <div class="flex items-center gap-12">
+            <h1 class="text-2xl font-black tracking-tighter"><span class="text-red-600">ECAM</span>TIERLIST</h1>
+            <div class="hidden md:flex gap-6">
+                <a href="#" class="nav-link flex items-center gap-2"><i class="fa-solid fa-house"></i> Home</a>
+                <a href="#" class="nav-link active-tab px-4 py-2 flex items-center gap-2"><i class="fa-solid fa-trophy"></i> Rankings</a>
+                <a href="#" class="nav-link flex items-center gap-2"><i class="fa-solid fa-comments"></i> Discords</a>
+            </div>
+        </div>
+        <div class="relative w-72">
+            <input type="text" placeholder="Search player..." class="w-full bg-[#161616] border border-[#262626] rounded-lg py-2 px-10 focus:outline-none focus:border-amber-600 text-sm">
+            <i class="fa-solid fa-search absolute left-4 top-3 text-neutral-500 text-xs"></i>
+            <span class="absolute right-4 top-2.5 text-neutral-600 text-xs font-bold bg-[#262626] px-1.5 py-0.5 rounded">/</span>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto">
+        <h2 class="text-4xl font-bold mb-2">Rankings</h2>
+        <p class="text-neutral-400 mb-8">Top PvP players ranked by their tier points across all categories.</p>
+
+        <div class="bg-[#111111] p-3 rounded-2xl border border-[#262626] mb-8 overflow-x-auto">
+            <div class="flex gap-3 min-w-max">
+                <button class="category-btn category-active px-6 py-4 rounded-xl flex flex-col items-center gap-2 w-24">
+                    <i class="fa-solid fa-trophy text-xl"></i> <span class="text-xs">All</span>
+                </button>
+                <button class="category-btn px-6 py-4 rounded-xl flex flex-col items-center gap-2 w-24">
+                    <i class="fa-solid fa-shield-halved text-xl"></i> <span class="text-xs">Vanilla</span>
+                </button>
+                <button class="category-btn px-6 py-4 rounded-xl flex flex-col items-center gap-2 w-24">
+                    <i class="fa-solid fa-heart text-xl"></i> <span class="text-xs">UHC</span>
+                </button>
+                <button class="category-btn px-6 py-4 rounded-xl flex flex-col items-center gap-2 w-24">
+                    <i class="fa-solid fa-flask text-xl"></i> <span class="text-xs">Pot</span>
+                </button>
+                <button class="category-btn px-6 py-4 rounded-xl flex flex-col items-center gap-2 w-24">
+                    <i class="fa-solid fa-wand-magic-sparkles text-xl"></i> <span class="text-xs">NethOP</span>
+                </button>
+                <button class="category-btn px-6 py-4 rounded-xl flex flex-col items-center gap-2 w-24">
+                    <i class="fa-solid fa-hammer text-xl"></i> <span class="text-xs">Mace</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="bg-[#111111] border border-[#262626] p-4 rounded-xl flex items-center justify-between mb-6">
+            <div class="flex items-center gap-3">
+                <span class="bg-[#262626] p-2 rounded-lg text-xs font-bold text-white uppercase"><i class="fa-solid fa-circle-info mr-2"></i>Information</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2 bg-black/40 px-4 py-2 rounded-lg border border-white/5">
+                    <span class="text-red-500 font-bold bg-red-500/10 px-2 py-0.5 rounded text-xs">E</span>
+                    <span class="text-sm font-mono tracking-wider">play.ecam.club</span>
+                    <i class="fa-regular fa-copy text-neutral-500 cursor-pointer hover:text-white ml-2"></i>
+                </div>
+                <button class="bg-indigo-600 p-2.5 rounded-lg hover:bg-indigo-500"><i class="fa-solid fa-up-right-from-square"></i></button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-12 px-6 py-3 text-xs font-bold text-neutral-500 uppercase tracking-widest border-b border-[#262626] mb-4">
+            <div class="col-span-1">#</div>
+            <div class="col-span-4">Player</div>
+            <div class="col-span-3 text-center">Region</div>
+            <div class="col-span-4 text-right">Tiers</div>
+        </div>
+
+        <div class="space-y-4">
+            <div class="player-row-top p-4 rounded-2xl grid grid-cols-12 items-center">
+                <div class="col-span-1 text-2xl font-black text-amber-500">1.</div>
+                <div class="col-span-4 flex items-center gap-4">
+                    <div class="relative">
+                        <img src="https://crafatar.com/avatars/LuisBack?size=50&overlay" class="rounded-lg shadow-2xl border-2 border-amber-600/50">
+                        <div class="absolute -top-2 -right-2 bg-amber-500 text-black text-[8px] font-black px-1 rounded-full border border-black italic">VIP</div>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-bold">LuisBack</h4>
+                        <p class="text-xs text-neutral-400 font-medium">✨ Combat Specialist <span class="text-amber-500/80">(75 points)</span></p>
+                    </div>
+                </div>
+                <div class="col-span-3 flex justify-center">
+                    <span class="bg-red-600/20 text-red-500 px-3 py-1 rounded text-xs font-bold border border-red-600/30">TR</span>
+                </div>
+                <div class="col-span-4 flex justify-end gap-2">
+                    <div class="tier-icon bg-purple-900/30 text-purple-400 border-purple-500/50">LT1</div>
+                    <div class="tier-icon bg-red-900/30 text-red-400 border-red-500/50 opacity-40">HT1</div>
+                    <div class="tier-icon bg-blue-900/30 text-blue-400 border-blue-500/50">HT2</div>
+                    <div class="tier-icon bg-neutral-800 text-neutral-600 border-neutral-700 opacity-20"><i class="fa-solid fa-lock"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
