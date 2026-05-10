@@ -3,153 +3,254 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ECAM Tier List | Pro</title>
+    <title>ECAM Tier List | Rankings</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg: #0a0c10;
-            --card: #111418;
-            --border: #30363d;
-            --text: #e6edf3;
+            --bg-dark: #0a0c0f;
+            --card-bg: #111418;
+            --text-main: #e1e1e1;
+            --text-muted: #8b949e;
+            --accent-blue: #58a6ff;
             --gold: #d4af37;
+            --tier-box: #21262d;
         }
 
         body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 0;
         }
 
-        /* FİLTRELEME ALANI */
-        .filter-container {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 15px;
+        /* NAVBAR */
+        .navbar {
+            background-color: var(--card-bg);
+            padding: 15px 50px;
             display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            align-items: center;
+            border-bottom: 1px solid #30363d;
+        }
+        .navbar-brand {
+            color: #ff4444;
+            font-weight: 800;
+            font-size: 1.5rem;
+            text-decoration: none;
+            margin-right: 40px;
+        }
+        .navbar-brand span { color: var(--text-main); }
+        
+        .nav-links { display: flex; gap: 20px; }
+        .nav-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: var(--text-main);
+            background-color: rgba(255,255,255,0.1);
         }
 
-        .filter-btn {
-            background: #1a1f26;
-            border: 1px solid var(--border);
-            color: #8b949e;
+        .search-container { margin-left: auto; position: relative; }
+        .search-box {
+            background-color: #1a1f26;
+            border: 1px solid #30363d;
+            border-radius: 10px;
             padding: 10px 15px;
-            border-radius: 8px;
+            color: var(--text-main);
+            width: 250px;
+            outline: none;
+        }
+
+        /* MAIN CONTENT */
+        .container { padding: 40px 50px; }
+        .page-content { display: none; }
+        .page-content.active { display: block; }
+        
+        .page-header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .page-header p { color: var(--text-muted); margin-top: 0; }
+
+        /* CATEGORY FILTER */
+        .filter-bar {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            display: flex;
+            gap: 15px;
+            border: 1px solid #30363d;
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+        .filter-btn {
+            background: none;
+            border: 1px solid transparent;
+            color: var(--text-muted);
             cursor: pointer;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-width: 85px;
-            transition: all 0.2s ease;
-        }
-
-        .filter-btn img {
-            width: 32px;
-            height: 32px;
-            image-rendering: pixelated;
-            margin-bottom: 8px;
-            filter: drop-shadow(0 0 8px rgba(0,0,0,0.5));
-        }
-
-        .filter-btn span {
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        /* Aktif Buton Efekti */
-        .filter-btn.active {
-            border-color: var(--gold);
-            background: rgba(212, 175, 55, 0.1);
-            color: var(--gold);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2);
-        }
-
-        .filter-btn:hover:not(.active) {
-            border-color: #58a6ff;
-            background: #21262d;
-            color: white;
-        }
-
-        /* OYUNCU LİSTESİ (Örnek) */
-        .player-list { margin-top: 30px; max-width: 900px; margin-left: auto; margin-right: auto; }
-        .player-card {
-            background: var(--card);
-            border: 1px solid var(--border);
+            gap: 10px;
+            min-width: 90px;
+            padding: 10px;
             border-radius: 10px;
-            padding: 15px 25px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 10px;
+            transition: 0.2s;
         }
+        .filter-btn img { width: 32px; height: 32px; image-rendering: pixelated; }
+        .filter-btn:hover { color: var(--text-main); background: rgba(255,255,255,0.05); }
+        .filter-btn.active {
+            color: var(--gold);
+            background-color: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--gold);
+        }
+
+        /* INFO BAR */
+        .info-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .info-btn { background-color: var(--card-bg); border: 1px solid #30363d; color: var(--text-main); padding: 10px 20px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 10px; }
+        .server-ip { display: flex; align-items: center; gap: 10px; background-color: var(--card-bg); padding: 10px 20px; border-radius: 10px; border: 1px solid #30363d; cursor: pointer; }
+        .ip-icon { color: var(--accent-blue); }
+
+        /* RANKINGS TABLE */
+        .ranking-table-header { display: grid; grid-template-columns: 80px 1fr 1fr 1fr; color: var(--text-muted); font-size: 0.9rem; padding: 15px 25px; }
+        .player-row {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            display: grid;
+            grid-template-columns: 80px 1fr 1fr 1fr;
+            align-items: center;
+            padding: 20px 25px;
+            border: 1px solid #30363d;
+            margin-bottom: 10px;
+            transition: 0.2s;
+        }
+        .player-row:hover { border-color: var(--accent-blue); transform: scale(1.01); }
+        .player-row.top-one { border: 1px solid var(--gold); background: linear-gradient(90deg, rgba(212,175,55,0.05) 0%, rgba(17,20,24,1) 100%); }
+        .rank-number { font-size: 1.5rem; font-weight: 800; color: var(--gold); }
+        .player-info { display: flex; align-items: center; gap: 15px; }
+        .player-head { width: 45px; height: 45px; border-radius: 8px; }
+        .player-name { font-weight: 700; font-size: 1.1rem; }
+        .player-subtitle { color: var(--text-muted); font-size: 0.85rem; display: flex; gap: 5px; align-items: center; }
+        .tier-badges { display: flex; gap: 10px; justify-content: flex-end; }
+        .tier-badge { width: 28px; height: 28px; background-color: var(--tier-box); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid #30363d; font-size: 0.7rem; font-weight: bold; color: var(--text-muted); }
+        .tier-badge.active { color: #ffbb33; border-color: #ffbb33; }
+        .tier-badge.red-active { color: #ff4444; border-color: #ff4444; }
     </style>
 </head>
 <body>
 
-<div class="filter-container">
-    <button class="filter-btn active">
-        <img src="https://minecraft.wiki/images/Invicon_Gold_Ingot.png">
-        <span>All</span>
-    </button>
-    
-    <button class="filter-btn">
-        <img src="https://minecraft.wiki/images/Invicon_End_Crystal.png">
-        <span>Vanilla</span>
-    </button>
-    
-    <button class="filter-btn">
-        <img src="https://minecraft.wiki/images/Invicon_Golden_Apple.png">
-        <span>UHC</span>
-    </button>
-    
-    <button class="filter-btn">
-        <img src="https://minecraft.wiki/images/Invicon_Splash_Potion_of_Healing.png">
-        <span>Pot</span>
-    </button>
-    
-    <button class="filter-btn">
-        <img src="https://minecraft.wiki/images/Invicon_Netherite_Helmet.png">
-        <span>NethOP</span>
-    </button>
-    
-    <button class="filter-btn">
-        <img src="https://minecraft.wiki/images/Invicon_Shield.png">
-        <span>SMP</span>
-    </button>
-    
-    <button class="filter-btn">
-        <img src="https://minecraft.wiki/images/Invicon_Netherite_Sword.png">
-        <span>Sword</span>
-    </button>
-    
-    <button class="filter-btn">
-        <img src="https://minecraft.wiki/images/Invicon_Netherite_Axe.png">
-        <span>Axe</span>
-    </button>
-    
-    <button class="filter-btn">
-        <img src="https://minecraft.wiki/images/Invicon_Mace.png">
-        <span>Mace</span>
-    </button>
-</div>
-
-<div class="player-list">
-    <div class="player-card" style="border-left: 4px solid var(--gold);">
-        <div style="display: flex; align-items: center; gap: 20px;">
-            <b style="color: var(--gold); font-size: 20px;">1.</b>
-            <img src="https://minotar.net/avatar/LuisBack/40" style="border-radius: 5px;">
-            <b style="font-size: 18px;">LuisBack</b>
-        </div>
-        <div style="color: #8b949e;">Combat Specialist</div>
+<div class="navbar">
+    <a href="#" class="navbar-brand" onclick="changePage('home')">ECAM<span>TIERLIST</span></a>
+    <div class="nav-links">
+        <a class="nav-link" id="nav-home" onclick="changePage('home')"><i class="fas fa-home"></i> Home</a>
+        <a class="nav-link active" id="nav-rankings" onclick="changePage('rankings')"><i class="fas fa-trophy"></i> Rankings</a>
+        <a href="https://discord.gg/Jxuh6eYZ" target="_blank" class="nav-link"><i class="fab fa-discord"></i> Discords</a>
+    </div>
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-box" placeholder="Search player..." onkeyup="searchPlayer()">
     </div>
 </div>
+
+<div class="container">
+    <div id="home" class="page-content text-center" style="padding-top: 100px;">
+        <h1 style="font-size: 4rem;">WELCOME TO ECAM</h1>
+        <p style="color: var(--text-muted); font-size: 1.2rem;">The most accurate PvP rankings for our community.</p>
+        <button class="info-btn" style="margin: 20px auto; padding: 15px 40px;" onclick="changePage('rankings')">View Rankings</button>
+    </div>
+
+    <div id="rankings" class="page-content active">
+        <div class="page-header">
+            <h1>Rankings</h1>
+            <p>Top PvP players ranked by their tier points across all categories.</p>
+        </div>
+
+        <div class="filter-bar">
+            <button class="filter-btn active" onclick="filterByKit('all', this)"><img src="https://minecraft.wiki/images/Invicon_Gold_Ingot.png"><span>All</span></button>
+            <button class="filter-btn" onclick="filterByKit('vanilla', this)"><img src="https://minecraft.wiki/images/Invicon_End_Crystal.png"><span>Vanilla</span></button>
+            <button class="filter-btn" onclick="filterByKit('uhc', this)"><img src="https://minecraft.wiki/images/Invicon_Golden_Apple.png"><span>UHC</span></button>
+            <button class="filter-btn" onclick="filterByKit('pot', this)"><img src="https://minecraft.wiki/images/Invicon_Splash_Potion_of_Healing.png"><span>Pot</span></button>
+            <button class="filter-btn" onclick="filterByKit('nethop', this)"><img src="https://minecraft.wiki/images/Invicon_Netherite_Helmet.png"><span>NethOP</span></button>
+            <button class="filter-btn" onclick="filterByKit('smp', this)"><img src="https://minecraft.wiki/images/Invicon_Shield.png"><span>SMP</span></button>
+            <button class="filter-btn" onclick="filterByKit('sword', this)"><img src="https://minecraft.wiki/images/Invicon_Netherite_Sword.png"><span>Sword</span></button>
+            <button class="filter-btn" onclick="filterByKit('axe', this)"><img src="https://minecraft.wiki/images/Invicon_Netherite_Axe.png"><span>Axe</span></button>
+            <button class="filter-btn" onclick="filterByKit('mace', this)"><img src="https://minecraft.wiki/images/Invicon_Mace.png"><span>Mace</span></button>
+        </div>
+
+        <div id="playerList">
+            <div class="player-row top-one" data-kits="all sword vanilla">
+                <div class="rank-number">1.</div>
+                <div class="player-info">
+                    <img src="https://minotar.net/avatar/LuisBack/45" class="player-head">
+                    <div>
+                        <div class="player-name">LuisBack</div>
+                        <div class="player-subtitle"><i class="fas fa-certificate" style="color:var(--gold)"></i> Combat Specialist (75 pts)</div>
+                    </div>
+                </div>
+                <div class="region-cell" style="text-align:center">TR</div>
+                <div class="tier-badges">
+                    <div class="tier-badge active">LT1</div>
+                    <div class="tier-badge red-active">HT2</div>
+                </div>
+            </div>
+
+            <div class="player-row" data-kits="all axe smp">
+                <div class="rank-number">2.</div>
+                <div class="player-info">
+                    <img src="https://minotar.net/avatar/Janekv/45" class="player-head">
+                    <div>
+                        <div class="player-name">Janekv</div>
+                        <div class="player-subtitle">Elite Warrior (60 pts)</div>
+                    </div>
+                </div>
+                <div class="region-cell" style="text-align:center">TR</div>
+                <div class="tier-badges">
+                    <div class="tier-badge active">LT2</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // SAYFA DEĞİŞTİRME (Home / Rankings)
+    function changePage(pageId) {
+        document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        
+        document.getElementById(pageId).classList.add('active');
+        document.getElementById('nav-' + pageId).classList.add('active');
+    }
+
+    // ARAMA YAPMA
+    function searchPlayer() {
+        let input = document.getElementById('searchInput').value.toLowerCase();
+        let players = document.querySelectorAll('.player-row');
+        
+        players.forEach(player => {
+            let name = player.querySelector('.player-name').innerText.toLowerCase();
+            player.style.display = name.includes(input) ? 'grid' : 'none';
+        });
+    }
+
+    // KİTE GÖRE FİLTRELEME
+    function filterByKit(kit, btn) {
+        // Buton renklerini güncelle
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Oyuncuları filtrele
+        let players = document.querySelectorAll('.player-row');
+        players.forEach(player => {
+            let kits = player.getAttribute('data-kits');
+            player.style.display = kits.includes(kit) ? 'grid' : 'none';
+        });
+    }
+</script>
 
 </body>
 </html>
