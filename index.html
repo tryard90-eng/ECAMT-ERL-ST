@@ -3,115 +3,282 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ECAM Tier List | SMP</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>ECAM Tier List | Rankings</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { background-color: #0d1117; color: white; font-family: 'Segoe UI', sans-serif; }
-        .navbar { background-color: #161b22; border-bottom: 2px solid #58a6ff; }
-        .tier-card { background: #161b22; border-radius: 15px; padding: 25px; border: 1px solid #30363d; margin-top: 20px; }
-        .search-box { background: #0d1117; border: 1px solid #58a6ff; color: white; border-radius: 10px; padding: 12px; width: 100%; margin-bottom: 20px; }
-        .kit-btn { margin: 5px; border-radius: 8px; font-weight: bold; transition: 0.3s; }
-        .player-row { background: #21262d; margin-bottom: 10px; padding: 15px; border-radius: 10px; display: flex; align-items: center; justify-content: space-between; border-left: 5px solid transparent; }
-        .sword-tier { border-left-color: #ff4444; }
-        .axe-tier { border-left-color: #ffbb33; }
-        .smp-tier { border-left-color: #00C851; }
-        .rank-badge { font-size: 0.8rem; padding: 5px 10px; border-radius: 20px; background: #30363d; color: #58a6ff; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        .nav-link { cursor: pointer; font-weight: bold; }
-        .kit-icon { margin-right: 10px; color: #58a6ff; }
+        :root {
+            --bg-dark: #0a0c0f;
+            --card-bg: #111418;
+            --text-main: #e1e1e1;
+            --text-muted: #8b949e;
+            --accent-blue: #58a6ff;
+            --gold: #d4af37;
+            --tier-box: #21262d;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background-color: var(--card-bg);
+            padding: 15px 50px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #30363d;
+        }
+        .navbar-brand {
+            color: #ff4444; /* ECAM kısmı kırmızı */
+            font-weight: 800;
+            font-size: 1.5rem;
+            text-decoration: none;
+            margin-right: 40px;
+        }
+        .navbar-brand span { color: var(--text-main); } /* TIERLIST kısmı beyaz */
+        
+        .nav-links { display: flex; gap: 20px; }
+        .nav-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: var(--text-main);
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        .search-container { margin-left: auto; position: relative; }
+        .search-box {
+            background-color: #1a1f26;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 10px 15px;
+            color: var(--text-main);
+            width: 250px;
+        }
+
+        /* MAIN CONTENT */
+        .container { padding: 40px 50px; }
+        
+        .page-header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .page-header p { color: var(--text-muted); margin-top: 0; }
+
+        /* CATEGORY FILTER (ALL, VANILLA ETC.) */
+        .filter-bar {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            display: flex;
+            gap: 15px;
+            border: 1px solid #30363d;
+            margin-bottom: 30px;
+        }
+        .filter-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            width: 90px;
+            padding: 10px;
+            border-radius: 10px;
+        }
+        .filter-btn i { font-size: 1.5rem; }
+        .filter-btn span { font-size: 0.9rem; }
+        .filter-btn:hover { color: var(--text-main); }
+        .filter-btn.active {
+            color: var(--gold);
+            background-color: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--gold);
+        }
+
+        /* INFO & SERVER IP BAR */
+        .info-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .info-btn {
+            background-color: var(--card-bg);
+            border: 1px solid #30363d;
+            color: var(--text-main);
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .server-ip {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--card-bg);
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: 1px solid #30363d;
+        }
+        .ip-text { color: var(--text-main); }
+        .ip-icon { color: var(--accent-blue); }
+
+        /* RANKINGS TABLE */
+        .ranking-table-header {
+            display: grid;
+            grid-template-columns: 80px 1fr 1fr 1fr;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            padding: 15px 25px;
+            margin-bottom: 10px;
+        }
+        .col-center { text-align: center; }
+        .col-right { text-align: right; }
+
+        .player-row {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            display: grid;
+            grid-template-columns: 80px 1fr 1fr 1fr;
+            align-items: center;
+            padding: 20px 25px;
+            border: 1px solid #30363d;
+            margin-bottom: 10px;
+            transition: 0.2s;
+        }
+        .player-row:hover { border-color: var(--accent-blue); }
+        
+        /* LuisBack için Özel Altın Kenarlık */
+        .player-row.top-one {
+            border: 1px solid var(--gold);
+            background: linear-gradient(90deg, rgba(212,175,55,0.05) 0%, rgba(17,20,24,1) 100%);
+        }
+
+        .rank-number {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--gold);
+        }
+
+        .player-info { display: flex; align-items: center; gap: 15px; }
+        .player-head {
+            width: 45px;
+            height: 45px;
+            border-radius: 8px;
+            image-rendering: pixelated; /* Minecraft kafası net dursun diye */
+        }
+        .player-name { font-weight: 700; font-size: 1.1rem; }
+        .player-subtitle { color: var(--text-muted); font-size: 0.85rem; display: flex; gap: 5px; align-items: center; }
+        .status-dot { color: var(--gold); font-size: 0.7rem; }
+
+        .region-cell { color: #f0f0f0; } /* Bölge kısmı beyaz */
+        
+        .tier-badges { display: flex; gap: 10px; justify-content: flex-end; }
+        .tier-badge {
+            width: 28px;
+            height: 28px;
+            background-color: var(--tier-box);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #30363d;
+            font-size: 0.7rem;
+            font-weight: bold;
+            color: var(--text-muted);
+        }
+        .tier-badge.active { color: #ffbb33; border-color: #ffbb33; } /* LT1 gibi aktif olanlar sarı */
+        .tier-badge.red-active { color: #ff4444; border-color: #ff4444; } /* HT2 gibi aktif olanlar kırmızı */
+
     </style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark shadow">
-    <div class="container">
-        <a class="navbar-brand fw-bold" href="#" onclick="showTab('home')">PLAY.ECAM.CLUB</a>
-        <div class="navbar-nav ms-auto">
-            <a class="nav-link px-3" onclick="showTab('home')">HOME</a>
-            <a class="nav-link px-3" onclick="showTab('tiers')">TIERS</a>
-            <a class="nav-link px-3 text-info" href="https://discord.gg/Jxuh6eYZ" target="_blank"><i class="fab fa-discord"></i> DISCORD</a>
-        </div>
+<div class="navbar">
+    <a href="#" class="navbar-brand">ECAM<span>TIERLIST</span></a>
+    <div class="nav-links">
+        <a class="nav-link"><i class="fas fa-home"></i> Home</a>
+        <a class="nav-link active"><i class="fas fa-trophy"></i> Rankings</a>
+        <a href="https://discord.gg/Jxuh6eYZ" target="_blank" class="nav-link"><i class="fab fa-discord"></i> Discords</a>
     </div>
-</nav>
-
-<div class="container mt-4">
-    <div id="home" class="tab-content active text-center">
-        <h1 class="display-4 fw-bold">ECAM TIER LIST</h1>
-        <p class="text-muted">Sword, Axe ve SMP Dünyasının En İyileri</p>
-        <div class="mt-4">
-            <button class="btn btn-outline-primary btn-lg m-2" onclick="showTab('tiers')">Sıralamayı Gör</button>
-            <a href="https://discord.gg/Jxuh6eYZ" target="_blank" class="btn btn-primary btn-lg m-2">Discord'a Katıl</a>
-        </div>
-    </div>
-
-    <div id="tiers" class="tab-content">
-        <div class="tier-card shadow-lg">
-            <input type="text" id="playerSearch" class="search-box" placeholder="Oyuncu ara..." onkeyup="filterPlayers()">
-            
-            <div class="d-flex justify-content-center mb-4">
-                <button class="btn btn-danger kit-btn" onclick="filterKit('Sword')"><i class="fas fa-fencing"></i> SWORD</button>
-                <button class="btn btn-warning kit-btn" onclick="filterKit('Axe')"><i class="fas fa-axe"></i> AXE</button>
-                <button class="btn btn-success kit-btn" onclick="filterKit('SMP')"><i class="fas fa-shield-heart"></i> SMP</button>
-                <button class="btn btn-secondary kit-btn" onclick="filterKit('All')">HEPSİ</button>
-            </div>
-
-            <div id="playerList">
-                <div class="player-row sword-tier" data-kit="Sword">
-                    <div>
-                        <i class="fas fa-fencing kit-icon"></i>
-                        <span class="fw-bold">LuisBack</span>
-                    </div>
-                    <span class="rank-badge">Discord: Sunucu Kurucusu</span>
-                </div>
-
-                <div class="player-row axe-tier" data-kit="Axe">
-                    <div>
-                        <i class="fas fa-axe kit-icon"></i>
-                        <span class="fw-bold">Janekv</span>
-                    </div>
-                    <span class="rank-badge">Discord: Moderator</span>
-                </div>
-
-                <div class="player-row smp-tier" data-kit="SMP">
-                    <div>
-                        <i class="fas fa-shield-heart kit-icon"></i>
-                        <span class="fw-bold">EcamPro</span>
-                    </div>
-                    <span class="rank-badge">Discord: Elite Member</span>
-                </div>
-            </div>
-        </div>
+    <div class="search-container">
+        <input type="text" class="search-box" placeholder="Search player...">
     </div>
 </div>
 
-<script>
-    function showTab(tabId) {
-        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-        document.getElementById(tabId).classList.add('active');
-    }
+<div class="container">
+    <div class="page-header">
+        <h1>Rankings</h1>
+        <p>Top PvP players ranked by their tier points across all categories.</p>
+    </div>
 
-    function filterKit(kit) {
-        let rows = document.querySelectorAll('.player-row');
-        rows.forEach(row => {
-            if (kit === 'All' || row.getAttribute('data-kit') === kit) {
-                row.style.display = 'flex';
-            } else {
-                row.style.display = 'none';
-            }
-        });
-    }
+    <div class="filter-bar">
+        <button class="filter-btn active"><i class="fas fa-trophy"></i><span>All</span></button>
+        <button class="filter-btn"><i class="fas fa-cube"></i><span>Vanilla</span></button>
+        <button class="filter-btn"><i class="fas fa-heart"></i><span>UHC</span></button>
+        <button class="filter-btn"><i class="fas fa-flask"></i><span>Pot</span></button>
+        <button class="filter-btn"><i class="fas fa-bolt"></i><span>NethOP</span></button>
+        <button class="filter-btn"><i class="fas fa-shield-heart"></i><span>SMP</span></button>
+        <button class="filter-btn"><i class="fas fa-fencing"></i><span>Sword</span></button>
+        <button class="filter-btn"><i class="fas fa-axe"></i><span>Axe</span></button>
+        <button class="filter-btn"><i class="fas fa-hammer"></i><span>Mace</span></button>
+    </div>
 
-    function filterPlayers() {
-        let input = document.getElementById('playerSearch').value.toLowerCase();
-        let rows = document.querySelectorAll('.player-row');
-        rows.forEach(row => {
-            let name = row.innerText.toLowerCase();
-            row.style.display = name.includes(input) ? 'flex' : 'none';
-        });
-    }
-</script>
+    <div class="info-bar">
+        <button class="info-btn"><i class="fas fa-info-circle"></i> Information</button>
+        <div class="server-ip">
+            <span class="ip-text">SERVER IP</span>
+            <span class="ip-text fw-bold">play.ecam.club</span>
+            <i class="fas fa-copy ip-icon"></i>
+            <i class="fas fa-external-link-alt ip-icon"></i>
+        </div>
+    </div>
+
+    <div class="ranking-table-header">
+        <span>#</span>
+        <span>PLAYER</span>
+        <span class="col-center">REGION</span>
+        <span class="col-right">TIERS</span>
+    </div>
+
+    <div class="player-row top-one">
+        <div class="rank-number">1.</div>
+        <div class="player-info">
+            <img src="https://minotar.net/avatar/LuisBack/45" class="player-head" alt="LuisBack Head">
+            <div>
+                <div class="player-name">LuisBack</div>
+                <div class="player-subtitle">
+                    <i class="fas fa-certificate status-dot"></i> 
+                    Combat Specialist (75 points)
+                </div>
+            </div>
+        </div>
+        <div class="region-cell col-center">TR</div>
+        <div class="tier-badges">
+            <div class="tier-badge active">LT1</div>
+            <div class="tier-badge"><i class="far fa-heart"></i></div>
+            <div class="tier-badge red-active">HT2</div>
+            <div class="tier-badge"><i class="fas fa-bolt"></i></div>
+            <div class="tier-badge"><i class="fas fa-shield-heart"></i></div>
+            <div class="tier-badge"><i class="fas fa-fencing"></i></div>
+            <div class="tier-badge"><i class="fas fa-axe"></i></div>
+            <div class="tier-badge"><i class="fas fa-hammer"></i></div>
+        </div>
+    </div>
+
+</div>
 
 </body>
 </html>
