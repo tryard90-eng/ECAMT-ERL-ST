@@ -102,19 +102,14 @@
             border-radius: 10px;
             transition: 0.2s;
         }
-        .filter-btn img { width: 32px; height: 32px; image-rendering: pixelated; }
+        .filter-btn img { width: 32px; height: 32px; image-rendering: pixelated; transition: transform 0.2s; }
         .filter-btn:hover { color: var(--text-main); background: rgba(255,255,255,0.05); }
+        .filter-btn:hover img { transform: scale(1.2); }
         .filter-btn.active {
             color: var(--gold);
             background-color: rgba(212, 175, 55, 0.1);
             border: 1px solid var(--gold);
         }
-
-        /* INFO BAR */
-        .info-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .info-btn { background-color: var(--card-bg); border: 1px solid #30363d; color: var(--text-main); padding: 10px 20px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 10px; }
-        .server-ip { display: flex; align-items: center; gap: 10px; background-color: var(--card-bg); padding: 10px 20px; border-radius: 10px; border: 1px solid #30363d; cursor: pointer; }
-        .ip-icon { color: var(--accent-blue); }
 
         /* RANKINGS TABLE */
         .ranking-table-header { display: grid; grid-template-columns: 80px 1fr 1fr 1fr; color: var(--text-muted); font-size: 0.9rem; padding: 15px 25px; }
@@ -157,10 +152,10 @@
 </div>
 
 <div class="container">
-    <div id="home" class="page-content text-center" style="padding-top: 100px;">
+    <div id="home" class="page-content text-center" style="padding-top: 100px; text-align: center;">
         <h1 style="font-size: 4rem;">WELCOME TO ECAM</h1>
         <p style="color: var(--text-muted); font-size: 1.2rem;">The most accurate PvP rankings for our community.</p>
-        <button class="info-btn" style="margin: 20px auto; padding: 15px 40px;" onclick="changePage('rankings')">View Rankings</button>
+        <button class="nav-link" style="margin: 20px auto; padding: 15px 40px; background: var(--card-bg); border: 1px solid var(--gold); color: white;" onclick="changePage('rankings')">View Rankings</button>
     </div>
 
     <div id="rankings" class="page-content active">
@@ -197,53 +192,30 @@
                     <div class="tier-badge red-active">HT2</div>
                 </div>
             </div>
-
-            <div class="player-row" data-kits="all axe smp">
-                <div class="rank-number">2.</div>
-                <div class="player-info">
-                    <img src="https://minotar.net/avatar/Janekv/45" class="player-head">
-                    <div>
-                        <div class="player-name">Janekv</div>
-                        <div class="player-subtitle">Elite Warrior (60 pts)</div>
-                    </div>
-                </div>
-                <div class="region-cell" style="text-align:center">TR</div>
-                <div class="tier-badges">
-                    <div class="tier-badge active">LT2</div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
 
 <script>
-    // SAYFA DEĞİŞTİRME (Home / Rankings)
     function changePage(pageId) {
         document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
         document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-        
         document.getElementById(pageId).classList.add('active');
         document.getElementById('nav-' + pageId).classList.add('active');
     }
 
-    // ARAMA YAPMA
     function searchPlayer() {
         let input = document.getElementById('searchInput').value.toLowerCase();
         let players = document.querySelectorAll('.player-row');
-        
         players.forEach(player => {
             let name = player.querySelector('.player-name').innerText.toLowerCase();
             player.style.display = name.includes(input) ? 'grid' : 'none';
         });
     }
 
-    // KİTE GÖRE FİLTRELEME
     function filterByKit(kit, btn) {
-        // Buton renklerini güncelle
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-
-        // Oyuncuları filtrele
         let players = document.querySelectorAll('.player-row');
         players.forEach(player => {
             let kits = player.getAttribute('data-kits');
@@ -251,6 +223,5 @@
         });
     }
 </script>
-
 </body>
 </html>
