@@ -1,62 +1,155 @@
-<div class="filter-bar">
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECAM Tier List | Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg: #0a0c10;
+            --card: #111418;
+            --border: #30363d;
+            --text: #e6edf3;
+            --gold: #d4af37;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* FİLTRELEME ALANI */
+        .filter-container {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .filter-btn {
+            background: #1a1f26;
+            border: 1px solid var(--border);
+            color: #8b949e;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 85px;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn img {
+            width: 32px;
+            height: 32px;
+            image-rendering: pixelated;
+            margin-bottom: 8px;
+            filter: drop-shadow(0 0 8px rgba(0,0,0,0.5));
+        }
+
+        .filter-btn span {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Aktif Buton Efekti */
+        .filter-btn.active {
+            border-color: var(--gold);
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--gold);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2);
+        }
+
+        .filter-btn:hover:not(.active) {
+            border-color: #58a6ff;
+            background: #21262d;
+            color: white;
+        }
+
+        /* OYUNCU LİSTESİ (Örnek) */
+        .player-list { margin-top: 30px; max-width: 900px; margin-left: auto; margin-right: auto; }
+        .player-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="filter-container">
     <button class="filter-btn active">
-        <img src="https://minecraft.wiki/images/Invicon_Gold_Ingot.png" width="32">
+        <img src="https://minecraft.wiki/images/Invicon_Gold_Ingot.png">
         <span>All</span>
     </button>
     
     <button class="filter-btn">
-        <img src="https://minecraft.wiki/images/Invicon_End_Crystal.png" width="32">
+        <img src="https://minecraft.wiki/images/Invicon_End_Crystal.png">
         <span>Vanilla</span>
     </button>
     
     <button class="filter-btn">
-        <img src="https://minecraft.wiki/images/Invicon_Golden_Apple.png" width="32">
+        <img src="https://minecraft.wiki/images/Invicon_Golden_Apple.png">
         <span>UHC</span>
     </button>
     
     <button class="filter-btn">
-        <img src="https://minecraft.wiki/images/Invicon_Splash_Potion_of_Healing.png" width="32">
+        <img src="https://minecraft.wiki/images/Invicon_Splash_Potion_of_Healing.png">
         <span>Pot</span>
     </button>
     
     <button class="filter-btn">
-        <img src="https://minecraft.wiki/images/Invicon_Netherite_Helmet.png" width="32">
+        <img src="https://minecraft.wiki/images/Invicon_Netherite_Helmet.png">
         <span>NethOP</span>
     </button>
     
     <button class="filter-btn">
-        <img src="https://minecraft.wiki/images/Invicon_Shield.png" width="32">
+        <img src="https://minecraft.wiki/images/Invicon_Shield.png">
         <span>SMP</span>
     </button>
     
     <button class="filter-btn">
-        <img src="https://minecraft.wiki/images/Invicon_Netherite_Sword.png" width="32">
+        <img src="https://minecraft.wiki/images/Invicon_Netherite_Sword.png">
         <span>Sword</span>
     </button>
     
     <button class="filter-btn">
-        <img src="https://minecraft.wiki/images/Invicon_Netherite_Axe.png" width="32">
+        <img src="https://minecraft.wiki/images/Invicon_Netherite_Axe.png">
         <span>Axe</span>
     </button>
     
     <button class="filter-btn">
-        <img src="https://minecraft.wiki/images/Invicon_Mace.png" width="32">
+        <img src="https://minecraft.wiki/images/Invicon_Mace.png">
         <span>Mace</span>
     </button>
 </div>
 
-<style>
-    /* İkonların daha güzel durması için ekleme */
-    .filter-btn img {
-        filter: drop-shadow(0 0 5px rgba(0,0,0,0.5));
-        transition: transform 0.2s;
-    }
-    .filter-btn:hover img {
-        transform: scale(1.2) rotate(-10deg);
-    }
-    .filter-btn span {
-        margin-top: 8px;
-        font-weight: 600;
-        font-size: 13px;
-    }
-</style>
+<div class="player-list">
+    <div class="player-card" style="border-left: 4px solid var(--gold);">
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <b style="color: var(--gold); font-size: 20px;">1.</b>
+            <img src="https://minotar.net/avatar/LuisBack/40" style="border-radius: 5px;">
+            <b style="font-size: 18px;">LuisBack</b>
+        </div>
+        <div style="color: #8b949e;">Combat Specialist</div>
+    </div>
+</div>
+
+</body>
+</html>
