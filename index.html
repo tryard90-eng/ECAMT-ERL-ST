@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TRTIERS | Rankings</title>
+    <title>TRTIERS | Rankings & Community</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -14,19 +14,18 @@
             --text-main: #e6edf3;
             --text-muted: #8b949e;
             --gold: #ffb100;
-            --silver: #8b949e;
-            --bronze: #cd7f32;
+            --discord-blurple: #5865F2;
         }
 
         body {
             background-color: var(--bg-dark);
             color: var(--text-main);
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', -apple-system, sans-serif;
             margin: 0;
             padding: 20px;
         }
 
-        /* Üst Menü Tasarımı */
+        /* NAVBAR */
         .header-wrapper {
             max-width: 1200px;
             margin: 0 auto 20px auto;
@@ -37,7 +36,7 @@
             align-items: center;
             border: 1px solid var(--border-color);
         }
-        .logo { color: #ff4444; font-weight: 900; font-size: 1.6rem; text-decoration: none; margin-right: 40px; }
+        .logo { color: #ff4444; font-weight: 900; font-size: 1.6rem; text-decoration: none; margin-right: 40px; font-style: italic; }
         .logo span { color: #fff; }
 
         .nav-links { display: flex; gap: 15px; flex-grow: 1; }
@@ -48,20 +47,15 @@
             border-radius: 10px;
             transition: 0.3s;
             font-size: 0.9rem;
+            cursor: pointer;
             display: flex;
             align-items: center;
             gap: 8px;
         }
         .nav-link.active { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid var(--border-color); }
 
-        /* Filtreleme Barı */
-        .filter-bar {
-            display: flex;
-            gap: 10px;
-            margin: 20px auto 30px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
+        /* FİLTRE BAR - SVG İKONLAR */
+        .filter-bar { display: flex; gap: 10px; margin: 20px auto 30px; justify-content: center; flex-wrap: wrap; }
         .filter-btn {
             background: var(--navbar-bg);
             border: 1px solid var(--border-color);
@@ -69,25 +63,30 @@
             cursor: pointer;
             padding: 12px;
             border-radius: 12px;
-            width: 75px;
+            width: 80px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
             transition: 0.2s;
         }
-        .filter-btn img { width: 28px; height: 28px; image-rendering: pixelated; }
+        .filter-btn svg { width: 28px; height: 28px; fill: currentColor; }
         .filter-btn.active { border-color: #fff; color: #fff; background: #21262d; border-bottom: 3px solid var(--gold); }
 
-        /* Tier Grid Sistemi */
+        /* TIER GRID */
+        .page-content { display: none; }
+        .page-content.active { display: block; }
+
         .info-strip {
             display: flex;
             justify-content: flex-end;
-            gap: 10px;
-            max-width: 1300px;
+            align-items: center;
+            gap: 12px;
+            max-width: 1400px;
             margin: 0 auto 15px;
         }
-        .info-btn { background: #21262d; padding: 6px 15px; border-radius: 8px; font-size: 0.8rem; border: 1px solid var(--border-color); color: #fff; cursor: pointer; }
+        .info-btn { background: #21262d; padding: 8px 16px; border-radius: 8px; font-size: 0.85rem; border: 1px solid var(--border-color); color: #fff; display: flex; align-items: center; gap: 8px; }
+        .dc-btn-small { background: var(--discord-blurple); color: #fff; border: none; padding: 8px; border-radius: 8px; cursor: pointer; }
 
         .tier-grid {
             display: grid;
@@ -96,57 +95,42 @@
             max-width: 1400px;
             margin: 0 auto;
         }
-
-        .tier-column {
-            background: rgba(22, 27, 34, 0.4);
-            border-radius: 12px;
-            min-height: 400px;
-            padding-bottom: 20px;
-        }
-
-        /* Tier Başlıkları */
-        .tier-header {
-            padding: 15px;
-            text-align: center;
-            font-weight: 800;
-            border-radius: 10px 10px 0 0;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            font-size: 1.1rem;
-        }
+        .tier-column { background: rgba(22, 27, 34, 0.4); border-radius: 12px; min-height: 500px; padding-bottom: 20px; border: 1px solid rgba(255,255,255,0.02); }
+        
+        .tier-header { padding: 15px; text-align: center; font-weight: 800; border-radius: 10px 10px 0 0; margin-bottom: 15px; font-size: 1.1rem; }
         .t1-head { background: #ffb100; color: #000; }
         .t2-head { background: #8b949e; color: #000; }
         .t3-head { background: #cd7f32; color: #fff; }
         .t4-head { background: #21262d; color: #8b949e; }
         .t5-head { background: #161b22; color: #8b949e; }
 
-        /* Boş Durum */
-        .empty-msg {
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            margin-top: 50px;
-            padding: 20px;
-        }
-        .empty-msg i { display: block; font-size: 2rem; margin-bottom: 10px; opacity: 0.3; }
+        .player-card { display: flex; align-items: center; padding: 10px 15px; margin-bottom: 2px; transition: 0.2s; cursor: pointer; }
+        .player-card:hover { background: rgba(255,255,255,0.05); }
+        .p-head { width: 32px; height: 32px; border-radius: 4px; margin-right: 12px; border: 1px solid var(--border-color); }
+        .p-name { font-size: 0.9rem; flex-grow: 1; }
+        .p-arrow { color: #30363d; font-size: 0.8rem; }
+        .empty-msg { text-align: center; color: var(--text-muted); font-size: 0.8rem; margin-top: 40px; padding: 20px; opacity: 0.5; }
 
-        /* Oyuncu Kartı */
-        .player-card {
+        /* DISCORD SAYFASI */
+        .discord-list {
+            max-width: 800px;
+            margin: 40px auto;
+            display: grid;
+            gap: 20px;
+        }
+        .discord-card {
+            background: var(--navbar-bg);
+            border: 1px solid var(--border-color);
+            padding: 25px;
+            border-radius: 20px;
             display: flex;
             align-items: center;
-            padding: 10px 15px;
-            margin: 0 10px 8px 10px;
-            background: transparent;
-            transition: 0.2s;
-            cursor: pointer;
+            justify-content: space-between;
         }
-        .player-card:hover { background: rgba(255,255,255,0.05); border-radius: 8px; }
-        .p-head { width: 32px; height: 32px; border-radius: 4px; margin-right: 12px; }
-        .p-name { font-size: 0.9rem; font-weight: 500; flex-grow: 1; }
-        .p-arrow { color: #30363d; font-size: 0.8rem; }
+        .dc-info { display: flex; align-items: center; gap: 20px; }
+        .dc-icon { width: 60px; height: 60px; background: var(--discord-blurple); border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 2rem; }
+        .join-btn { background: var(--discord-blurple); color: #fff; text-decoration: none; padding: 12px 25px; border-radius: 10px; font-weight: bold; transition: 0.3s; }
+        .join-btn:hover { opacity: 0.8; transform: scale(1.05); }
     </style>
 </head>
 <body>
@@ -154,100 +138,121 @@
 <div class="header-wrapper">
     <a href="#" class="logo">TR<span>TIERS</span></a>
     <div class="nav-links">
-        <a href="#" class="nav-link"><i class="fas fa-home"></i> Home</a>
-        <a href="#" class="nav-link active"><i class="fas fa-trophy"></i> Rankings</a>
-        <a href="#" class="nav-link"><i class="fab fa-discord"></i> Discords</a>
+        <a onclick="showPage('home', this)" class="nav-link"><i class="fas fa-home"></i> Home</a>
+        <a onclick="showPage('rankings', this)" class="nav-link active"><i class="fas fa-trophy"></i> Rankings</a>
+        <a onclick="showPage('discords', this)" class="nav-link"><i class="fab fa-discord"></i> Discords</a>
     </div>
 </div>
 
-<div class="filter-bar">
-    <button class="filter-btn active" onclick="filterData('all', this)"><i class="fas fa-trophy" style="font-size: 1.5rem; color: var(--gold);"></i><span>Overall</span></button>
-    <button class="filter-btn" onclick="filterData('vanilla', this)"><img src="https://minecraft.wiki/images/End_Crystal_JE2_BE2.png"><span>Vanilla</span></button>
-    <button class="filter-btn" onclick="filterData('uhc', this)"><img src="https://minecraft.wiki/images/Enchanted_Golden_Apple_JE2_BE2.gif"><span>UHC</span></button>
-    <button class="filter-btn" onclick="filterData('pot', this)"><img src="https://minecraft.wiki/images/Splash_Potion_of_Healing_JE2_BE2.png"><span>Pot</span></button>
+<!-- RANKINGS SAYFASI -->
+<div id="rankings" class="page-content active">
+    <div class="filter-bar">
+        <button class="filter-btn active" onclick="filterData('all', this)">
+            <i class="fas fa-globe" style="font-size: 1.5rem;"></i>
+            <span>Overall</span>
+        </button>
+        <!-- HDMI (SVG) İKONLAR BURADA -->
+        <button class="filter-btn" onclick="filterData('vanilla', this)">
+            <svg viewBox="0 0 24 24"><path d="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z" fill="#b388ff"/></svg>
+            <span>Vanilla</span>
+        </button>
+        <button class="filter-btn" onclick="filterData('uhc', this)">
+            <svg viewBox="0 0 24 24"><path d="M20,8H17.19C16.74,7.22 16.12,6.5 15.37,5.87L15.71,5.54C16.1,5.15 16.1,4.5 15.71,4.12C15.32,3.73 14.69,3.73 14.3,4.12L13.03,5.39C12.7,5.14 12.35,4.94 12,4.81V2H10V4.81C9.65,4.94 9.3,5.14 8.97,5.39L7.7,4.12C7.31,3.73 6.68,3.73 6.29,4.12C5.9,4.5 5.9,5.15 6.29,5.54L6.63,5.87C5.88,6.5 5.26,7.22 4.81,8H2V10H4.11C4.04,10.33 4,10.66 4,11C4,15.42 7.58,19 12,19C16.42,19 20,15.42 20,11C20,10.66 19.96,10.33 19.89,10H22V8H20Z" fill="#ffb100"/></svg>
+            <span>UHC</span>
+        </button>
+        <button class="filter-btn" onclick="filterData('pot', this)">
+            <svg viewBox="0 0 24 24"><path d="M16,10H14V7H16V10M10,10H8V7H10V10M17,5H7V3H17V5M19,11C19,15.97 15.87,20 12,20C8.13,20 5,15.97 5,11V10H19V11Z" fill="#ff44ff"/></svg>
+            <span>Pot</span>
+        </button>
+    </div>
+
+    <div class="info-strip">
+        <div class="info-btn"><i class="fas fa-info-circle"></i> Information</div>
+        <div class="info-btn" style="border-color: var(--discord-blurple);">
+            <img src="https://minecraft.wiki/images/Shield_JE2_BE2.png" width="16">
+            SERVER IP: <b>trpvp.club</b>
+        </div>
+        <button class="dc-btn-small"><i class="fab fa-discord"></i></button>
+    </div>
+
+    <div class="tier-grid">
+        <div class="tier-column"><div class="tier-header t1-head">Tier 1</div><div id="tier1-list"></div></div>
+        <div class="tier-column"><div class="tier-header t2-head">Tier 2</div><div id="tier2-list"></div></div>
+        <div class="tier-column"><div class="tier-header t3-head">Tier 3</div><div id="tier3-list"></div></div>
+        <div class="tier-column"><div class="tier-header t4-head">Tier 4</div><div id="tier4-list"></div></div>
+        <div class="tier-column"><div class="tier-header t5-head">Tier 5</div><div id="tier5-list"></div></div>
+    </div>
 </div>
 
-<div class="info-strip">
-    <button class="info-btn"><i class="fas fa-info-circle"></i> Information</button>
-    <div class="info-btn">IP: trpvp.club</div>
-</div>
-
-<div class="tier-grid">
-    <!-- Sütun 1 -->
-    <div class="tier-column">
-        <div class="tier-header t1-head"><i class="fas fa-trophy"></i> Tier 1</div>
-        <div id="tier1-list"></div>
-    </div>
-    <!-- Sütun 2 -->
-    <div class="tier-column">
-        <div class="tier-header t2-head"><i class="fas fa-trophy"></i> Tier 2</div>
-        <div id="tier2-list"></div>
-    </div>
-    <!-- Sütun 3 -->
-    <div class="tier-column">
-        <div class="tier-header t3-head"><i class="fas fa-trophy"></i> Tier 3</div>
-        <div id="tier3-list"></div>
-    </div>
-    <!-- Sütun 4 -->
-    <div class="tier-column">
-        <div class="tier-header t4-head">Tier 4</div>
-        <div id="tier4-list"></div>
-    </div>
-    <!-- Sütun 5 -->
-    <div class="tier-column">
-        <div class="tier-header t5-head">Tier 5</div>
-        <div id="tier5-list"></div>
+<!-- DISCORD SAYFASI CONTENT -->
+<div id="discords" class="page-content">
+    <div class="discord-list">
+        <div class="discord-card">
+            <div class="dc-info">
+                <div class="dc-icon"><i class="fab fa-discord"></i></div>
+                <div>
+                    <h3>TRPvP Official</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Resmi topluluk ve duyuru kanalı.</p>
+                </div>
+            </div>
+            <a href="#" class="join-btn">Katıl</a>
+        </div>
+        <div class="discord-card">
+            <div class="dc-info">
+                <div class="dc-icon" style="background: #333;"><i class="fas fa-gavel"></i></div>
+                <div>
+                    <h3>Staff Support</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Yetkili başvuruları ve destek hattı.</p>
+                </div>
+            </div>
+            <a href="#" class="join-btn">Bilet Aç</a>
+        </div>
     </div>
 </div>
 
 <script>
-    // ÖRNEK VERİ SETİ (Buraya istediğin kadar oyuncu ekle)
     const players = [
         { name: "LuisBack", tier: 1, kits: ["vanilla", "pot"] },
         { name: "Bambamprolava", tier: 3, kits: ["vanilla"] },
-        { name: "BnRoots_", tier: 3, kits: ["uhc", "pot"] },
+        { name: "BnRoots_", tier: 3, kits: ["uhc"] },
+        { name: "Corteixzz", tier: 3, kits: ["vanilla"] },
         { name: "1Bacon17_", tier: 4, kits: ["vanilla"] },
-        { name: "_MrStar", tier: 5, kits: ["pot"] },
-        { name: "Corteixzz", tier: 3, kits: ["vanilla"] }
+        { name: "_MrStar", tier: 5, kits: ["pot"] }
     ];
 
+    function showPage(pageId, btn) {
+        document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        document.getElementById(pageId).classList.add('active');
+        btn.classList.add('active');
+    }
+
     function filterData(kit, btn) {
-        // Buton aktiflik durumu
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
+        
+        for(let i=1; i<=5; i++) document.getElementById(`tier${i}-list`).innerHTML = "";
 
-        // Listeleri temizle
-        for(let i=1; i<=5; i++) {
-            document.getElementById(`tier${i}-list`).innerHTML = "";
-        }
-
-        // Oyuncuları filtrele ve dağıt
         const filtered = kit === 'all' ? players : players.filter(p => p.kits.includes(kit));
 
-        // Sütunlara ekle
         for(let i=1; i<=5; i++) {
             const tierPlayers = filtered.filter(p => p.tier === i);
             const container = document.getElementById(`tier${i}-list`);
-
             if(tierPlayers.length === 0) {
-                container.innerHTML = `<div class="empty-msg"><i class="fas fa-smile-wink"></i>Henüz oyuncu yok</div>`;
+                container.innerHTML = `<div class="empty-msg"><i class="fas fa-ghost" style="font-size:1.5rem; display:block; margin-bottom:10px;"></i>Henüz oyuncu yok</div>`;
             } else {
                 tierPlayers.forEach(p => {
                     container.innerHTML += `
                         <div class="player-card">
                             <img src="https://minotar.net/avatar/${p.name}/32" class="p-head">
                             <span class="p-name">${p.name}</span>
-                            <i class="fas fa-chevron-up p-arrow"></i>
-                        </div>
-                    `;
+                            <i class="fas fa-angles-up p-arrow"></i>
+                        </div>`;
                 });
             }
         }
     }
-
-    // Sayfa açıldığında ilk yükleme
     filterData('all', document.querySelector('.filter-btn'));
 </script>
-
 </body>
 </html>
