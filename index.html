@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TRTIERS | Rankings & Community</title>
+    <title>TRTIERS | Pro Rankings</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -48,30 +48,29 @@
             transition: 0.3s;
             font-size: 0.9rem;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            display: flex; align-items: center; gap: 8px;
         }
         .nav-link.active { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid var(--border-color); }
 
         /* FİLTRE BAR - SVG İKONLAR */
-        .filter-bar { display: flex; gap: 10px; margin: 20px auto 30px; justify-content: center; flex-wrap: wrap; }
+        .filter-bar { display: flex; gap: 10px; margin: 20px auto 30px; justify-content: center; flex-wrap: wrap; max-width: 1000px; }
         .filter-btn {
             background: var(--navbar-bg);
             border: 1px solid var(--border-color);
             color: var(--text-muted);
             cursor: pointer;
-            padding: 12px;
+            padding: 10px;
             border-radius: 12px;
-            width: 80px;
+            width: 85px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             transition: 0.2s;
         }
-        .filter-btn svg { width: 28px; height: 28px; fill: currentColor; }
+        .filter-btn svg { width: 26px; height: 26px; }
         .filter-btn.active { border-color: #fff; color: #fff; background: #21262d; border-bottom: 3px solid var(--gold); }
+        .filter-btn span { font-size: 0.75rem; font-weight: 600; }
 
         /* TIER GRID */
         .page-content { display: none; }
@@ -86,7 +85,6 @@
             margin: 0 auto 15px;
         }
         .info-btn { background: #21262d; padding: 8px 16px; border-radius: 8px; font-size: 0.85rem; border: 1px solid var(--border-color); color: #fff; display: flex; align-items: center; gap: 8px; }
-        .dc-btn-small { background: var(--discord-blurple); color: #fff; border: none; padding: 8px; border-radius: 8px; cursor: pointer; }
 
         .tier-grid {
             display: grid;
@@ -97,40 +95,22 @@
         }
         .tier-column { background: rgba(22, 27, 34, 0.4); border-radius: 12px; min-height: 500px; padding-bottom: 20px; border: 1px solid rgba(255,255,255,0.02); }
         
-        .tier-header { padding: 15px; text-align: center; font-weight: 800; border-radius: 10px 10px 0 0; margin-bottom: 15px; font-size: 1.1rem; }
-        .t1-head { background: #ffb100; color: #000; }
+        .tier-header { padding: 15px; text-align: center; font-weight: 800; border-radius: 10px 10px 0 0; margin-bottom: 15px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
+        .t1-head { background: linear-gradient(45deg, #ffb100, #ffcc33); color: #000; }
         .t2-head { background: #8b949e; color: #000; }
         .t3-head { background: #cd7f32; color: #fff; }
         .t4-head { background: #21262d; color: #8b949e; }
         .t5-head { background: #161b22; color: #8b949e; }
 
-        .player-card { display: flex; align-items: center; padding: 10px 15px; margin-bottom: 2px; transition: 0.2s; cursor: pointer; }
+        /* OYUNCU KARTI & SIRALAMA */
+        .player-card { display: flex; align-items: center; padding: 10px 15px; margin-bottom: 2px; transition: 0.2s; cursor: pointer; position: relative; }
         .player-card:hover { background: rgba(255,255,255,0.05); }
+        .p-rank { font-size: 0.7rem; font-weight: 900; background: var(--border-color); color: var(--text-muted); padding: 2px 6px; border-radius: 4px; margin-right: 8px; min-width: 15px; text-align: center; }
         .p-head { width: 32px; height: 32px; border-radius: 4px; margin-right: 12px; border: 1px solid var(--border-color); }
-        .p-name { font-size: 0.9rem; flex-grow: 1; }
+        .p-name { font-size: 0.9rem; flex-grow: 1; font-weight: 500; }
         .p-arrow { color: #30363d; font-size: 0.8rem; }
+        
         .empty-msg { text-align: center; color: var(--text-muted); font-size: 0.8rem; margin-top: 40px; padding: 20px; opacity: 0.5; }
-
-        /* DISCORD SAYFASI */
-        .discord-list {
-            max-width: 800px;
-            margin: 40px auto;
-            display: grid;
-            gap: 20px;
-        }
-        .discord-card {
-            background: var(--navbar-bg);
-            border: 1px solid var(--border-color);
-            padding: 25px;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .dc-info { display: flex; align-items: center; gap: 20px; }
-        .dc-icon { width: 60px; height: 60px; background: var(--discord-blurple); border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 2rem; }
-        .join-btn { background: var(--discord-blurple); color: #fff; text-decoration: none; padding: 12px 25px; border-radius: 10px; font-weight: bold; transition: 0.3s; }
-        .join-btn:hover { opacity: 0.8; transform: scale(1.05); }
     </style>
 </head>
 <body>
@@ -144,35 +124,50 @@
     </div>
 </div>
 
-<!-- RANKINGS SAYFASI -->
 <div id="rankings" class="page-content active">
+    <!-- FILTRE BAR - TÜM MODLAR EKLEDİ -->
     <div class="filter-bar">
         <button class="filter-btn active" onclick="filterData('all', this)">
-            <i class="fas fa-globe" style="font-size: 1.5rem;"></i>
+            <svg viewBox="0 0 24 24" fill="none" stroke="#ffb100" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
             <span>Overall</span>
         </button>
-        <!-- HDMI (SVG) İKONLAR BURADA -->
         <button class="filter-btn" onclick="filterData('vanilla', this)">
             <svg viewBox="0 0 24 24"><path d="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z" fill="#b388ff"/></svg>
             <span>Vanilla</span>
         </button>
+        <button class="filter-btn" onclick="filterData('sword', this)">
+            <svg viewBox="0 0 24 24"><path d="M19.66,3.07L16.13,6.6L16.84,7.31L14.72,9.43L14.01,8.72L12.6,10.13L13.31,10.84L11.19,12.96L10.48,12.25L4.12,18.61L3.06,20.73L5,22.67L7.12,21.61L13.48,15.25L12.77,14.54L14.89,12.42L15.6,13.13L17.01,11.72L16.3,11.01L18.42,8.89L19.13,9.6L22.66,6.07L19.66,3.07Z" fill="#4fc3f7"/></svg>
+            <span>Sword</span>
+        </button>
+        <button class="filter-btn" onclick="filterData('axe', this)">
+            <svg viewBox="0 0 24 24"><path d="M11,2L2,11L4,13L6,11L13,18L11,20L13,22L22,13L20,11L18,13L11,6L13,4L11,2Z" fill="#81d4fa"/></svg>
+            <span>Axe</span>
+        </button>
         <button class="filter-btn" onclick="filterData('uhc', this)">
-            <svg viewBox="0 0 24 24"><path d="M20,8H17.19C16.74,7.22 16.12,6.5 15.37,5.87L15.71,5.54C16.1,5.15 16.1,4.5 15.71,4.12C15.32,3.73 14.69,3.73 14.3,4.12L13.03,5.39C12.7,5.14 12.35,4.94 12,4.81V2H10V4.81C9.65,4.94 9.3,5.14 8.97,5.39L7.7,4.12C7.31,3.73 6.68,3.73 6.29,4.12C5.9,4.5 5.9,5.15 6.29,5.54L6.63,5.87C5.88,6.5 5.26,7.22 4.81,8H2V10H4.11C4.04,10.33 4,10.66 4,11C4,15.42 7.58,19 12,19C16.42,19 20,15.42 20,11C20,10.66 19.96,10.33 19.89,10H22V8H20Z" fill="#ffb100"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M20,8H17.19C16.74,7.22 16.12,6.5 15.37,5.87L15.71,5.54L14.3,4.12L12,4.81V2H10V4.81L7.7,4.12C7.31,3.73 6.68,3.73 6.29,4.12L6.63,5.87C5.88,6.5 5.26,7.22 4.81,8H2V10H4.11C4,15.42 7.58,19 12,19C16.42,19 20,15.42 20,11V10H22V8H20Z" fill="#ffb100"/></svg>
             <span>UHC</span>
         </button>
         <button class="filter-btn" onclick="filterData('pot', this)">
             <svg viewBox="0 0 24 24"><path d="M16,10H14V7H16V10M10,10H8V7H10V10M17,5H7V3H17V5M19,11C19,15.97 15.87,20 12,20C8.13,20 5,15.97 5,11V10H19V11Z" fill="#ff44ff"/></svg>
             <span>Pot</span>
         </button>
+        <button class="filter-btn" onclick="filterData('smp', this)">
+            <svg viewBox="0 0 24 24"><path d="M21,16.5C21,16.88 20.79,17.21 20.47,17.38L12.57,21.82C12.41,21.94 12.21,22 12,22C11.79,22 11.59,21.94 11.43,21.82L3.53,17.38C3.21,17.21 3,16.88 3,16.5V7.5C3,7.12 3.21,6.79 3.53,6.62L11.43,2.18C11.59,2.06 11.79,2 12,2C12.21,2 12.41,2.06 12.57,2.18L20.47,6.62C20.79,6.79 21,7.12 21,7.5V16.5Z" fill="#4caf50"/></svg>
+            <span>SMP</span>
+        </button>
+        <button class="filter-btn" onclick="filterData('nethop', this)">
+            <svg viewBox="0 0 24 24"><path d="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z" fill="#37474f"/></svg>
+            <span>NethOP</span>
+        </button>
+        <button class="filter-btn" onclick="filterData('mace', this)">
+            <svg viewBox="0 0 24 24"><path d="M7,2H17V8H7V2M10,8V22H14V8H10Z" fill="#ff7043"/></svg>
+            <span>Mace</span>
+        </button>
     </div>
 
     <div class="info-strip">
-        <div class="info-btn"><i class="fas fa-info-circle"></i> Information</div>
-        <div class="info-btn" style="border-color: var(--discord-blurple);">
-            <img src="https://minecraft.wiki/images/Shield_JE2_BE2.png" width="16">
-            SERVER IP: <b>trpvp.club</b>
-        </div>
-        <button class="dc-btn-small"><i class="fab fa-discord"></i></button>
+        <div class="info-btn" style="border-color: var(--discord-blurple);">IP: <b>trpvp.club</b></div>
+        <div class="info-btn"><i class="fas fa-clock"></i> Updated: 2026</div>
     </div>
 
     <div class="tier-grid">
@@ -184,40 +179,15 @@
     </div>
 </div>
 
-<!-- DISCORD SAYFASI CONTENT -->
-<div id="discords" class="page-content">
-    <div class="discord-list">
-        <div class="discord-card">
-            <div class="dc-info">
-                <div class="dc-icon"><i class="fab fa-discord"></i></div>
-                <div>
-                    <h3>TRPvP Official</h3>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;">Resmi topluluk ve duyuru kanalı.</p>
-                </div>
-            </div>
-            <a href="#" class="join-btn">Katıl</a>
-        </div>
-        <div class="discord-card">
-            <div class="dc-info">
-                <div class="dc-icon" style="background: #333;"><i class="fas fa-gavel"></i></div>
-                <div>
-                    <h3>Staff Support</h3>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;">Yetkili başvuruları ve destek hattı.</p>
-                </div>
-            </div>
-            <a href="#" class="join-btn">Bilet Aç</a>
-        </div>
-    </div>
-</div>
-
 <script>
+    // Veri setine yeni modları ekledim
     const players = [
-        { name: "LuisBack", tier: 1, kits: ["vanilla", "pot"] },
-        { name: "Bambamprolava", tier: 3, kits: ["vanilla"] },
-        { name: "BnRoots_", tier: 3, kits: ["uhc"] },
-        { name: "Corteixzz", tier: 3, kits: ["vanilla"] },
-        { name: "1Bacon17_", tier: 4, kits: ["vanilla"] },
-        { name: "_MrStar", tier: 5, kits: ["pot"] }
+        { name: "LuisBack", tier: 1, kits: ["vanilla", "pot", "sword", "mace"] },
+        { name: "Bambamprolava", tier: 1, kits: ["vanilla", "axe"] },
+        { name: "BnRoots_", tier: 2, kits: ["uhc", "nethop"] },
+        { name: "Corteixzz", tier: 3, kits: ["vanilla", "smp"] },
+        { name: "1Bacon17_", tier: 4, kits: ["vanilla", "sword"] },
+        { name: "_MrStar", tier: 5, kits: ["pot", "mace"] }
     ];
 
     function showPage(pageId, btn) {
@@ -238,20 +208,27 @@
         for(let i=1; i<=5; i++) {
             const tierPlayers = filtered.filter(p => p.tier === i);
             const container = document.getElementById(`tier${i}-list`);
+            
             if(tierPlayers.length === 0) {
-                container.innerHTML = `<div class="empty-msg"><i class="fas fa-ghost" style="font-size:1.5rem; display:block; margin-bottom:10px;"></i>Henüz oyuncu yok</div>`;
+                container.innerHTML = `<div class="empty-msg">Henüz yok</div>`;
             } else {
-                tierPlayers.forEach(p => {
+                tierPlayers.forEach((p, index) => {
+                    // Overall sekmesindeysek sıralama numarası göster
+                    const rankHtml = kit === 'all' ? `<span class="p-rank">#${index + 1}</span>` : '';
+                    
                     container.innerHTML += `
                         <div class="player-card">
+                            ${rankHtml}
                             <img src="https://minotar.net/avatar/${p.name}/32" class="p-head">
                             <span class="p-name">${p.name}</span>
-                            <i class="fas fa-angles-up p-arrow"></i>
+                            <i class="fas fa-chevron-right p-arrow"></i>
                         </div>`;
                 });
             }
         }
     }
+    
+    // İlk yükleme
     filterData('all', document.querySelector('.filter-btn'));
 </script>
 </body>
