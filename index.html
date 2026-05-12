@@ -7,13 +7,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-dark: #0a0c0f;
-            --card-bg: #111418;
-            --text-main: #e1e1e1;
+            --bg-dark: #0d1117;
+            --navbar-bg: #161b22;
+            --card-bg: #12151a;
+            --row-bg: #161b22;
+            --text-main: #e6edf3;
             --text-muted: #8b949e;
             --accent-blue: #58a6ff;
-            --gold: #d4af37;
-            --tier-box: #21262d;
+            --gold: #ffb100;
+            --green-box: #238636;
         }
 
         body {
@@ -21,130 +23,148 @@
             color: var(--text-main);
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             margin: 0;
-            padding: 0;
+            padding: 20px;
         }
 
-        /* NAVBAR */
-        .navbar {
-            background-color: var(--card-bg);
-            padding: 15px 50px;
+        /* NAVBAR (Resimdeki gibi üstte kapsül şeklinde) */
+        .header-wrapper {
+            max-width: 1200px;
+            margin: 0 auto 30px auto;
+            background-color: var(--navbar-bg);
+            padding: 10px 30px;
+            border-radius: 20px;
             display: flex;
             align-items: center;
-            border-bottom: 1px solid #30363d;
+            border: 1px solid #30363d;
         }
         .navbar-brand {
             color: #ff4444;
-            font-weight: 800;
-            font-size: 1.5rem;
+            font-weight: 900;
+            font-size: 1.8rem;
             text-decoration: none;
-            margin-right: 40px;
+            margin-right: 50px;
+            font-style: italic;
         }
-        .navbar-brand span { color: var(--text-main); }
-        
-        .nav-links { display: flex; gap: 20px; }
+        .navbar-brand span { color: #fff; }
+
+        .nav-links { display: flex; gap: 15px; flex-grow: 1; }
         .nav-link {
             color: var(--text-muted);
             text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
             padding: 8px 15px;
-            border-radius: 8px;
+            border-radius: 10px;
+            transition: 0.3s;
             cursor: pointer;
-            transition: 0.2s;
+            font-weight: 500;
         }
         .nav-link:hover, .nav-link.active {
-            color: var(--text-main);
-            background-color: rgba(255,255,255,0.1);
+            color: #fff;
+            background-color: #21262d;
         }
 
-        .search-container { margin-left: auto; position: relative; }
+        .search-container { position: relative; }
         .search-box {
-            background-color: #1a1f26;
+            background-color: #0d1117;
             border: 1px solid #30363d;
             border-radius: 10px;
-            padding: 10px 15px;
-            color: var(--text-main);
-            width: 250px;
-            outline: none;
+            padding: 8px 15px;
+            color: #fff;
+            width: 200px;
         }
 
-        /* MAIN CONTENT */
-        .container { padding: 40px 50px; }
+        /* MAIN CONTAINER */
+        .container { max-width: 1100px; margin: 0 auto; background-color: var(--card-bg); border-radius: 20px; padding: 30px; border: 1px solid #30363d; }
         .page-content { display: none; }
         .page-content.active { display: block; }
-        
-        .page-header h1 { font-size: 2.5rem; margin-bottom: 10px; }
-        .page-header p { color: var(--text-muted); margin-top: 0; }
 
-        /* CATEGORY FILTER */
+        /* KİT FİLTRELERİ (Resimdeki gibi kare kutular) */
         .filter-bar {
-            background-color: var(--card-bg);
-            border-radius: 15px;
-            padding: 20px;
             display: flex;
-            gap: 15px;
-            border: 1px solid #30363d;
-            margin-bottom: 30px;
-            overflow-x: auto;
+            gap: 12px;
+            margin-bottom: 40px;
+            justify-content: center;
+            flex-wrap: wrap;
         }
         .filter-btn {
-            background: none;
-            border: 1px solid transparent;
+            background-color: #161b22;
+            border: 1px solid #30363d;
             color: var(--text-muted);
             cursor: pointer;
+            padding: 10px;
+            border-radius: 12px;
+            width: 80px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
-            min-width: 90px;
-            padding: 10px;
-            border-radius: 10px;
+            gap: 5px;
             transition: 0.2s;
         }
-        .filter-btn img { width: 32px; height: 32px; image-rendering: pixelated; transition: transform 0.2s; }
-        .filter-btn:hover { color: var(--text-main); background: rgba(255,255,255,0.05); }
-        .filter-btn:hover img { transform: scale(1.2); }
+        .filter-btn img { width: 32px; height: 32px; image-rendering: pixelated; }
+        .filter-btn:hover { border-color: var(--gold); transform: translateY(-3px); }
         .filter-btn.active {
-            color: var(--gold);
-            background-color: rgba(212, 175, 55, 0.1);
-            border: 1px solid var(--gold);
+            background-color: #21262d;
+            border-color: #fff;
+            color: #fff;
+            border-bottom: 3px solid #fff;
         }
 
-        /* RANKINGS TABLE */
-        .ranking-table-header { display: grid; grid-template-columns: 80px 1fr 1fr 1fr; color: var(--text-muted); font-size: 0.9rem; padding: 15px 25px; }
+        /* OYUNCU SATIRI (Resimdeki gibi yanlamasına) */
         .player-row {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            display: grid;
-            grid-template-columns: 80px 1fr 1fr 1fr;
+            background-color: var(--row-bg);
+            border-radius: 15px;
+            display: flex;
             align-items: center;
-            padding: 20px 25px;
+            padding: 15px 25px;
+            margin-bottom: 15px;
             border: 1px solid #30363d;
-            margin-bottom: 10px;
             transition: 0.2s;
         }
-        .player-row:hover { border-color: var(--accent-blue); transform: scale(1.01); }
-        .player-row.top-one { border: 1px solid var(--gold); background: linear-gradient(90deg, rgba(212,175,55,0.05) 0%, rgba(17,20,24,1) 100%); }
-        .rank-number { font-size: 1.5rem; font-weight: 800; color: var(--gold); }
-        .player-info { display: flex; align-items: center; gap: 15px; }
-        .player-head { width: 45px; height: 45px; border-radius: 8px; }
-        .player-name { font-weight: 700; font-size: 1.1rem; }
-        .player-subtitle { color: var(--text-muted); font-size: 0.85rem; display: flex; gap: 5px; align-items: center; }
-        .tier-badges { display: flex; gap: 10px; justify-content: flex-end; }
-        .tier-badge { width: 28px; height: 28px; background-color: var(--tier-box); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid #30363d; font-size: 0.7rem; font-weight: bold; color: var(--text-muted); }
-        .tier-badge.active { color: #ffbb33; border-color: #ffbb33; }
-        .tier-badge.red-active { color: #ff4444; border-color: #ff4444; }
+        .player-row:hover { transform: scale(1.01); border-color: #58a6ff; }
+        
+        .rank-num { font-size: 2rem; font-weight: 900; font-style: italic; color: #fff; width: 60px; }
+        
+        .player-img-box { position: relative; margin-right: 20px; }
+        .player-head { width: 60px; height: 60px; border-radius: 5px; background: #21262d; }
+        
+        .player-details { flex-grow: 1; }
+        .player-name { font-size: 1.3rem; font-weight: bold; margin-bottom: 4px; }
+        .player-stats { color: var(--text-muted); font-size: 0.9rem; display: flex; align-items: center; gap: 8px; }
+        .crystal-icon { width: 16px; height: 16px; image-rendering: pixelated; }
+
+        .region-tag {
+            background-color: #1a4d32;
+            color: #4dfa92;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            margin: 0 30px;
+        }
+
+        .tiers-list { display: flex; gap: 10px; }
+        .tier-circle {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #21262d;
+            border: 2px solid #30363d;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+        .tier-circle.active { border-color: #ffb100; color: #ffb100; }
+        .tier-circle.mace { border-color: #b388ff; color: #b388ff; }
     </style>
 </head>
 <body>
 
-<div class="navbar">
-    <a href="#" class="navbar-brand" onclick="changePage('home')">ECAM<span>TIERLIST</span></a>
+<div class="header-wrapper">
+    <a href="#" class="navbar-brand">ECAM<span>TIERS</span></a>
     <div class="nav-links">
         <a class="nav-link" id="nav-home" onclick="changePage('home')"><i class="fas fa-home"></i> Home</a>
         <a class="nav-link active" id="nav-rankings" onclick="changePage('rankings')"><i class="fas fa-trophy"></i> Rankings</a>
-        <a href="https://discord.gg/Jxuh6eYZ" target="_blank" class="nav-link"><i class="fab fa-discord"></i> Discords</a>
+        <a class="nav-link" href="https://discord.gg/Jxuh6eYZ" target="_blank"><i class="fab fa-discord"></i> Discords</a>
     </div>
     <div class="search-container">
         <input type="text" id="searchInput" class="search-box" placeholder="Search player..." onkeyup="searchPlayer()">
@@ -152,21 +172,16 @@
 </div>
 
 <div class="container">
-    <div id="home" class="page-content text-center" style="padding-top: 100px; text-align: center;">
-        <h1 style="font-size: 4rem;">WELCOME TO ECAM</h1>
-        <p style="color: var(--text-muted); font-size: 1.2rem;">The most accurate PvP rankings for our community.</p>
-        <button class="nav-link" style="margin: 20px auto; padding: 15px 40px; background: var(--card-bg); border: 1px solid var(--gold); color: white;" onclick="changePage('rankings')">View Rankings</button>
+    <div id="home" class="page-content" style="text-align: center; padding: 100px 0;">
+        <h1>WELCOME TO ECAM</h1>
+        <p>En iyi PvP sıralaması için Rankings sekmesine bak kanka.</p>
     </div>
 
     <div id="rankings" class="page-content active">
-        <div class="page-header">
-            <h1>Rankings</h1>
-            <p>Top PvP players ranked by their tier points across all categories.</p>
-        </div>
-
+        <!-- KİT FİLTRELERİ -->
         <div class="filter-bar">
-            <button class="filter-btn active" onclick="filterByKit('all', this)"><img src="https://minecraft.wiki/images/Invicon_Gold_Ingot.png"><span>All</span></button>
-            <button class="filter-btn" onclick="filterByKit('vanilla', this)"><img src="https://minecraft.wiki/images/Invicon_End_Crystal.png"><span>Vanilla</span></button>
+            <button class="filter-btn active" onclick="filterByKit('all', this)"><i class="fas fa-trophy" style="font-size: 1.5rem; margin-bottom: 5px;"></i><span>All</span></button>
+            <button class="filter-btn" onclick="filterByKit('vanilla', this)"><img src="https://minecraft.wiki/images/End_Crystal_JE2_BE2.png"><span>Vanilla</span></button>
             <button class="filter-btn" onclick="filterByKit('uhc', this)"><img src="https://minecraft.wiki/images/Invicon_Golden_Apple.png"><span>UHC</span></button>
             <button class="filter-btn" onclick="filterByKit('pot', this)"><img src="https://minecraft.wiki/images/Invicon_Splash_Potion_of_Healing.png"><span>Pot</span></button>
             <button class="filter-btn" onclick="filterByKit('nethop', this)"><img src="https://minecraft.wiki/images/Invicon_Netherite_Helmet.png"><span>NethOP</span></button>
@@ -177,19 +192,24 @@
         </div>
 
         <div id="playerList">
-            <div class="player-row top-one" data-kits="all sword vanilla">
-                <div class="rank-number">1.</div>
-                <div class="player-info">
-                    <img src="https://minotar.net/avatar/LuisBack/45" class="player-head">
-                    <div>
-                        <div class="player-name">LuisBack</div>
-                        <div class="player-subtitle"><i class="fas fa-certificate" style="color:var(--gold)"></i> Combat Specialist (75 pts)</div>
+            <!-- LUISBACK (Resimdeki stile uygun) -->
+            <div class="player-row" data-kits="all sword vanilla">
+                <div class="rank-num">1.</div>
+                <div class="player-img-box">
+                    <img src="https://minotar.net/avatar/LuisBack/60" class="player-head">
+                </div>
+                <div class="player-details">
+                    <div class="player-name">LuisBack</div>
+                    <div class="player-stats">
+                        <img src="https://minecraft.wiki/images/End_Crystal_JE2_BE2.png" class="crystal-icon">
+                        Combat Specialist (75 points)
                     </div>
                 </div>
-                <div class="region-cell" style="text-align:center">TR</div>
-                <div class="tier-badges">
-                    <div class="tier-badge active">LT1</div>
-                    <div class="tier-badge red-active">HT2</div>
+                <div class="region-tag">TR</div>
+                <div class="tiers-list">
+                    <div class="tier-circle active">LT1</div>
+                    <div class="tier-circle active">HT2</div>
+                    <div class="tier-circle mace">HT1</div>
                 </div>
             </div>
         </div>
@@ -207,9 +227,9 @@
     function searchPlayer() {
         let input = document.getElementById('searchInput').value.toLowerCase();
         let players = document.querySelectorAll('.player-row');
-        players.forEach(player => {
-            let name = player.querySelector('.player-name').innerText.toLowerCase();
-            player.style.display = name.includes(input) ? 'grid' : 'none';
+        players.forEach(p => {
+            let name = p.querySelector('.player-name').innerText.toLowerCase();
+            p.style.display = name.includes(input) ? 'flex' : 'none';
         });
     }
 
@@ -217,9 +237,9 @@
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         let players = document.querySelectorAll('.player-row');
-        players.forEach(player => {
-            let kits = player.getAttribute('data-kits');
-            player.style.display = kits.includes(kit) ? 'grid' : 'none';
+        players.forEach(p => {
+            let kits = p.getAttribute('data-kits');
+            p.style.display = kits.includes(kit) ? 'flex' : 'none';
         });
     }
 </script>
