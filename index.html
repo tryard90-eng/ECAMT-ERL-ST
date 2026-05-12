@@ -9,13 +9,12 @@
         :root {
             --bg-dark: #0d1117;
             --navbar-bg: #161b22;
-            --card-bg: #12151a;
-            --row-bg: #161b22;
+            --card-bg: #0d1117;
+            --row-bg: #12151a;
             --text-main: #e6edf3;
             --text-muted: #8b949e;
-            --accent-blue: #58a6ff;
             --gold: #ffb100;
-            --green-box: #238636;
+            --border-color: #30363d;
         }
 
         body {
@@ -26,16 +25,16 @@
             padding: 20px;
         }
 
-        /* NAVBAR (Resimdeki gibi üstte kapsül şeklinde) */
+        /* NAVBAR - Kapsül Tasarım */
         .header-wrapper {
             max-width: 1200px;
             margin: 0 auto 30px auto;
             background-color: var(--navbar-bg);
-            padding: 10px 30px;
-            border-radius: 20px;
+            padding: 12px 30px;
+            border-radius: 18px;
             display: flex;
             align-items: center;
-            border: 1px solid #30363d;
+            border: 1px solid var(--border-color);
         }
         .navbar-brand {
             color: #ff4444;
@@ -44,123 +43,134 @@
             text-decoration: none;
             margin-right: 50px;
             font-style: italic;
+            letter-spacing: -1px;
         }
         .navbar-brand span { color: #fff; }
 
-        .nav-links { display: flex; gap: 15px; flex-grow: 1; }
+        .nav-links { display: flex; gap: 20px; flex-grow: 1; }
         .nav-link {
             color: var(--text-muted);
             text-decoration: none;
-            padding: 8px 15px;
-            border-radius: 10px;
+            padding: 10px 18px;
+            border-radius: 12px;
             transition: 0.3s;
             cursor: pointer;
             font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         .nav-link:hover, .nav-link.active {
             color: #fff;
             background-color: #21262d;
         }
 
-        .search-container { position: relative; }
         .search-box {
             background-color: #0d1117;
-            border: 1px solid #30363d;
-            border-radius: 10px;
-            padding: 8px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 10px 15px;
             color: #fff;
-            width: 200px;
+            width: 220px;
+            outline: none;
         }
 
         /* MAIN CONTAINER */
-        .container { max-width: 1100px; margin: 0 auto; background-color: var(--card-bg); border-radius: 20px; padding: 30px; border: 1px solid #30363d; }
+        .container { 
+            max-width: 1150px; 
+            margin: 0 auto; 
+            background-color: rgba(22, 27, 34, 0.5); 
+            border-radius: 20px; 
+            padding: 40px; 
+            border: 1px solid var(--border-color); 
+        }
         .page-content { display: none; }
         .page-content.active { display: block; }
 
-        /* KİT FİLTRELERİ (Resimdeki gibi kare kutular) */
+        /* KİT FİLTRELERİ */
         .filter-bar {
             display: flex;
-            gap: 12px;
-            margin-bottom: 40px;
+            gap: 15px;
+            margin-bottom: 50px;
             justify-content: center;
             flex-wrap: wrap;
         }
         .filter-btn {
             background-color: #161b22;
-            border: 1px solid #30363d;
+            border: 1px solid var(--border-color);
             color: var(--text-muted);
             cursor: pointer;
-            padding: 10px;
-            border-radius: 12px;
-            width: 80px;
+            padding: 12px;
+            border-radius: 14px;
+            width: 85px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
             transition: 0.2s;
         }
-        .filter-btn img { width: 32px; height: 32px; image-rendering: pixelated; }
-        .filter-btn:hover { border-color: var(--gold); transform: translateY(-3px); }
+        .filter-btn img { width: 34px; height: 34px; image-rendering: pixelated; }
+        .filter-btn:hover { transform: translateY(-4px); border-color: var(--gold); }
         .filter-btn.active {
             background-color: #21262d;
             border-color: #fff;
             color: #fff;
-            border-bottom: 3px solid #fff;
+            border-bottom: 4px solid var(--gold);
         }
 
-        /* OYUNCU SATIRI (Resimdeki gibi yanlamasına) */
+        /* OYUNCU SATIRI */
         .player-row {
             background-color: var(--row-bg);
-            border-radius: 15px;
+            border-radius: 18px;
             display: flex;
             align-items: center;
-            padding: 15px 25px;
-            margin-bottom: 15px;
-            border: 1px solid #30363d;
+            padding: 20px 30px;
+            margin-bottom: 18px;
+            border: 1px solid var(--border-color);
             transition: 0.2s;
         }
-        .player-row:hover { transform: scale(1.01); border-color: #58a6ff; }
+        .player-row:hover { border-color: #58a6ff; background-color: #1c2128; }
         
-        .rank-num { font-size: 2rem; font-weight: 900; font-style: italic; color: #fff; width: 60px; }
+        .rank-num { font-size: 2.2rem; font-weight: 900; font-style: italic; color: #fff; width: 70px; opacity: 0.9; }
         
-        .player-img-box { position: relative; margin-right: 20px; }
-        .player-head { width: 60px; height: 60px; border-radius: 5px; background: #21262d; }
+        .player-img-box { margin-right: 25px; }
+        .player-head { width: 65px; height: 65px; border-radius: 8px; border: 2px solid #30363d; }
         
         .player-details { flex-grow: 1; }
-        .player-name { font-size: 1.3rem; font-weight: bold; margin-bottom: 4px; }
-        .player-stats { color: var(--text-muted); font-size: 0.9rem; display: flex; align-items: center; gap: 8px; }
-        .crystal-icon { width: 16px; height: 16px; image-rendering: pixelated; }
+        .player-name { font-size: 1.4rem; font-weight: bold; margin-bottom: 6px; }
+        .player-stats { color: var(--text-muted); font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
+        .kit-icon-small { width: 20px; height: 20px; image-rendering: pixelated; }
 
         .region-tag {
-            background-color: #1a4d32;
+            background-color: rgba(35, 134, 54, 0.2);
             color: #4dfa92;
-            padding: 5px 12px;
-            border-radius: 6px;
-            font-weight: bold;
-            margin: 0 30px;
+            padding: 6px 15px;
+            border-radius: 8px;
+            font-weight: 800;
+            margin: 0 40px;
+            border: 1px solid rgba(77, 250, 146, 0.3);
         }
 
-        .tiers-list { display: flex; gap: 10px; }
+        .tiers-list { display: flex; gap: 12px; }
+        .tier-badge-container { display: flex; flex-direction: column; align-items: center; gap: 4px; }
         .tier-circle {
-            width: 35px;
-            height: 35px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             background: #21262d;
-            border: 2px solid #30363d;
-            font-weight: bold;
-            font-size: 0.8rem;
+            border: 2px solid var(--border-color);
         }
-        .tier-circle.active { border-color: #ffb100; color: #ffb100; }
-        .tier-circle.mace { border-color: #b388ff; color: #b388ff; }
+        .tier-circle img { width: 24px; height: 24px; image-rendering: pixelated; }
+        .tier-label { font-size: 0.75rem; font-weight: 900; color: var(--gold); }
     </style>
 </head>
 <body>
 
 <div class="header-wrapper">
-    <a href="#" class="navbar-brand">ECAM<span>TIERS</span></a>
+    <a href="#" class="navbar-brand">TR<span>TIERS</span></a>
     <div class="nav-links">
         <a class="nav-link" id="nav-home" onclick="changePage('home')"><i class="fas fa-home"></i> Home</a>
         <a class="nav-link active" id="nav-rankings" onclick="changePage('rankings')"><i class="fas fa-trophy"></i> Rankings</a>
@@ -172,44 +182,71 @@
 </div>
 
 <div class="container">
-    <div id="home" class="page-content" style="text-align: center; padding: 100px 0;">
-        <h1>WELCOME TO ECAM</h1>
-        <p>En iyi PvP sıralaması için Rankings sekmesine bak kanka.</p>
+    <div id="home" class="page-content" style="text-align: center; padding: 80px 0;">
+        <h1>ECAM TIER LIST</h1>
+        <p>En güncel PvP sıralamaları burada kanka.</p>
     </div>
 
     <div id="rankings" class="page-content active">
-        <!-- KİT FİLTRELERİ -->
+        <!-- KİT FİLTRELERİ (Görsel Linkleri Güncellendi) -->
         <div class="filter-bar">
-            <button class="filter-btn active" onclick="filterByKit('all', this)"><i class="fas fa-trophy" style="font-size: 1.5rem; margin-bottom: 5px;"></i><span>All</span></button>
-            <button class="filter-btn" onclick="filterByKit('vanilla', this)"><img src="https://minecraft.wiki/images/End_Crystal_JE2_BE2.png"><span>Vanilla</span></button>
-            <button class="filter-btn" onclick="filterByKit('uhc', this)"><img src="https://minecraft.wiki/images/Invicon_Golden_Apple.png"><span>UHC</span></button>
-            <button class="filter-btn" onclick="filterByKit('pot', this)"><img src="https://minecraft.wiki/images/Invicon_Splash_Potion_of_Healing.png"><span>Pot</span></button>
-            <button class="filter-btn" onclick="filterByKit('nethop', this)"><img src="https://minecraft.wiki/images/Invicon_Netherite_Helmet.png"><span>NethOP</span></button>
-            <button class="filter-btn" onclick="filterByKit('smp', this)"><img src="https://minecraft.wiki/images/Invicon_Shield.png"><span>SMP</span></button>
-            <button class="filter-btn" onclick="filterByKit('sword', this)"><img src="https://minecraft.wiki/images/Invicon_Netherite_Sword.png"><span>Sword</span></button>
-            <button class="filter-btn" onclick="filterByKit('axe', this)"><img src="https://minecraft.wiki/images/Invicon_Netherite_Axe.png"><span>Axe</span></button>
-            <button class="filter-btn" onclick="filterByKit('mace', this)"><img src="https://minecraft.wiki/images/Invicon_Mace.png"><span>Mace</span></button>
+            <button class="filter-btn active" onclick="filterByKit('all', this)"><i class="fas fa-trophy" style="font-size: 1.8rem; color: var(--gold);"></i><span>All</span></button>
+            <button class="filter-btn" onclick="filterByKit('vanilla', this)"><img src="https://raw.githubusercontent.com/super-mario-reborn/minecraft-assets/master/assets/minecraft/textures/item/end_crystal.png"><span>Vanilla</span></button>
+            <button class="filter-btn" onclick="filterByKit('uhc', this)"><img src="https://raw.githubusercontent.com/super-mario-reborn/minecraft-assets/master/assets/minecraft/textures/item/golden_apple.png"><span>UHC</span></button>
+            <button class="filter-btn" onclick="filterByKit('pot', this)"><img src="https://raw.githubusercontent.com/super-mario-reborn/minecraft-assets/master/assets/minecraft/textures/item/potion_bottle_splash_healing.png"><span>Pot</span></button>
+            <button class="filter-btn" onclick="filterByKit('nethop', this)"><img src="https://raw.githubusercontent.com/super-mario-reborn/minecraft-assets/master/assets/minecraft/textures/item/netherite_helmet.png"><span>NethOP</span></button>
+            <button class="filter-btn" onclick="filterByKit('smp', this)"><img src="https://raw.githubusercontent.com/super-mario-reborn/minecraft-assets/master/assets/minecraft/textures/item/shield.png"><span>SMP</span></button>
+            <button class="filter-btn" onclick="filterByKit('sword', this)"><img src="https://raw.githubusercontent.com/super-mario-reborn/minecraft-assets/master/assets/minecraft/textures/item/netherite_sword.png"><span>Sword</span></button>
+            <button class="filter-btn" onclick="filterByKit('axe', this)"><img src="https://raw.githubusercontent.com/super-mario-reborn/minecraft-assets/master/assets/minecraft/textures/item/netherite_axe.png"><span>Axe</span></button>
+            <button class="filter-btn" onclick="filterByKit('mace', this)"><img src="https://raw.githubusercontent.com/super-mario-reborn/minecraft-assets/master/assets/minecraft/textures/item/mace.png"><span>Mace</span></button>
         </div>
 
         <div id="playerList">
-            <!-- LUISBACK (Resimdeki stile uygun) -->
-            <div class="player-row" data-kits="all sword vanilla">
+            <!-- 1. LuisBack -->
+            <div class="player-row" data-kits="all vanilla sword">
                 <div class="rank-num">1.</div>
                 <div class="player-img-box">
-                    <img src="https://minotar.net/avatar/LuisBack/60" class="player-head">
+                    <img src="https://minotar.net/avatar/LuisBack/65" class="player-head">
                 </div>
                 <div class="player-details">
                     <div class="player-name">LuisBack</div>
                     <div class="player-stats">
-                        <img src="https://minecraft.wiki/images/End_Crystal_JE2_BE2.png" class="crystal-icon">
+                        <img src="https://raw.githubusercontent.com/super-mario-reborn/minecraft-assets/master/assets/minecraft/textures/item/end_crystal.png" class="kit-icon-small">
                         Combat Specialist (75 points)
                     </div>
                 </div>
                 <div class="region-tag">TR</div>
                 <div class="tiers-list">
-                    <div class="tier-circle active">LT1</div>
-                    <div class="tier-circle active">HT2</div>
-                    <div class="tier-circle mace">HT1</div>
+                    <div class="tier-badge-container">
+                        <div class="tier-circle" style="border-color: #b388ff;"><img src="https://raw.githubusercontent.com/super-mario-reborn/minecraft-assets/master/assets/minecraft/textures/item/netherite_helmet.png"></div>
+                        <span class="tier-label">LT1</span>
+                    </div>
+                    <div class="tier-badge-container">
+                        <div class="tier-circle" style="border-color: #ffb100;"><img src="https://raw.githubusercontent.com/super-mario-reborn/minecraft-assets/master/assets/minecraft/textures/item/potion_bottle_splash_healing.png"></div>
+                        <span class="tier-label">HT2</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Dalft -->
+            <div class="player-row" data-kits="all axe smp">
+                <div class="rank-num">2.</div>
+                <div class="player-img-box">
+                    <img src="https://minotar.net/avatar/Dalft/65" class="player-head">
+                </div>
+                <div class="player-details">
+                    <div class="player-name">Dalft</div>
+                    <div class="player-stats">
+                        <img src="https://raw.githubusercontent.com/super-mario-reborn/minecraft-assets/master/assets/minecraft/textures/item/netherite_axe.png" class="kit-icon-small">
+                        Combat Cadet (44 points)
+                    </div>
+                </div>
+                <div class="region-tag">TR</div>
+                <div class="tiers-list">
+                    <div class="tier-badge-container">
+                        <div class="tier-circle" style="border-color: #ffb100;"><img src="https://raw.githubusercontent.com/super-mario-reborn/minecraft-assets/master/assets/minecraft/textures/item/netherite_axe.png"></div>
+                        <span class="tier-label">HT3</span>
+                    </div>
                 </div>
             </div>
         </div>
